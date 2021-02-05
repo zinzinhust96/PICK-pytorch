@@ -91,6 +91,10 @@ class Document:
         # Limit the number of boxes and number of transcripts to process.
         boxes_num = min(len(boxes), MAX_BOXES_NUM)
         transcript_len = min(max([len(t) for t in transcripts[:boxes_num]]), MAX_TRANSCRIPT_LEN)
+        print('----------')
+        print('boxes_num: ', boxes_num)
+        print('transcript_len: ', transcript_len)
+        print('----------')
         mask = np.zeros((boxes_num, transcript_len), dtype=int)
 
         relation_features = np.zeros((boxes_num, boxes_num, 6))
@@ -153,6 +157,10 @@ class Document:
                                                                                           transcripts[:boxes_num],
                                                                                           entities, ['address'])
 
+                # NOTE: iob_tags_label: CHARACTER-LEVEL IOB tag (e.g [['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'],
+                # ['B-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company', 'I-company'], ...])
+
+                # NOTE: convert IOB label tag from string to number (with padding)
                 iob_tags_label = IOBTagsField.process(iob_tags_label)[:, :transcript_len].numpy()
                 box_entity_types = [entities_vocab_cls.stoi[t] for t in box_entity_types[:boxes_num]]
 

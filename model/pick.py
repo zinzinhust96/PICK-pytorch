@@ -99,7 +99,7 @@ class PICKModel(nn.Module):
         ##### Forward Begin #####
         ### Encoder module ###
         # word embedding
-        text_emb = self.word_emb(text_segments)
+        text_emb = self.word_emb(text_segments)     # text_emb (B, N, T, 512)
 
         # src_key_padding_mask is text padding mask, True is padding value (B*N, T)
         # graph_node_mask is mask for graph, True is valid node, (B*N, T)

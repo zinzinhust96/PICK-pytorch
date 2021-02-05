@@ -41,6 +41,7 @@ class GraphLearningLayer(nn.Module):
         x_hat = self.projection(x)
         _, _, learning_dim = x_hat.shape
 
+        # ---------- NOTE: Equation 6 in the paper ---------- #
         # (B, N, N, learning_dim)
         x_i = x_hat.unsqueeze(2).expand(B, N, N, learning_dim)
         x_j = x_hat.unsqueeze(1).expand(B, N, N, learning_dim)
@@ -66,6 +67,7 @@ class GraphLearningLayer(nn.Module):
 
         sum_out = soft_adj.sum(dim=-1, keepdim=True)
         soft_adj = soft_adj / sum_out + 1e-10
+        # -------------------------------------------------- #
 
         gl_loss = None
         if self.training:

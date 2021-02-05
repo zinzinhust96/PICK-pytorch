@@ -31,7 +31,7 @@ np.random.seed(SEED)
 
 def main(config: ConfigParser, local_master: bool, logger=None):
     # setup dataset and data_loader instances
-    train_dataset = config.init_obj('train_dataset', pick_dataset_module)
+    train_dataset = config.init_obj('train_dataset', pick_dataset_module)   # NOTE: get class object PICKDataset
     train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset) \
         if config['distributed'] else None
 
